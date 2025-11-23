@@ -36,6 +36,8 @@ const Shop = ({ searchQuery } : ShopProps) => {
                 image: product.image,
                 category: product.category
             });
+        }else {
+            console.log("Product not found");
         }
     };
 
