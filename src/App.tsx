@@ -1,17 +1,23 @@
 import { useState, useMemo } from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './shared/Navbar.tsx';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
 import Filters, { FilterState } from './components/Filters';
 import ProductGrid from './components/ProductGrid';
 import Promotions from './components/Promotions';
 import Cart from './pages/Cart';
+import Profile from './pages/Profile';
+import NotificationPanel from './components/NotificationPanel';
 import { CartProvider, useCart } from './context/CartContext';
+import { ProfileProvider } from './context/ProfileContext';
+import { NotificationProvider } from './context/NotificationContext';
 import { products, categories, brands } from './data/mockData';
+import {Footer} from "./shared/Footer.tsx";
 
 function AppContent() {
   const { cartCount, addToCart } = useCart();
-  const [currentPage, setCurrentPage] = useState<'shop' | 'cart'>('shop');
+  const [currentPage, setCurrentPage] = useState<'shop' | 'cart' | 'profile'>('shop');
+  const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filters, setFilters] = useState<FilterState>({
@@ -104,6 +110,24 @@ function AppContent() {
     setSelectedCategory(prev => prev === category ? '' : category);
   };
 
+  if (currentPage === 'profile') {
+    return (
+      <>
+        <Navbar
+          cartCount={cartCount}
+          onSearchChange={setSearchQuery}
+          onCartClick={() => setCurrentPage('cart')}
+          onProfileClick={() => setCurrentPage('profile')}
+          notificationsOpen={showNotifications}
+          onNotificationsToggle={setShowNotifications}
+        />
+        <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+        <Profile onBack={() => setCurrentPage('shop')} />
+        <Footer />
+      </>
+    );
+  }
+
   if (currentPage === 'cart') {
     return (
       <>
@@ -111,47 +135,13 @@ function AppContent() {
           cartCount={cartCount}
           onSearchChange={setSearchQuery}
           onCartClick={() => setCurrentPage('cart')}
+          onProfileClick={() => setCurrentPage('profile')}
+          notificationsOpen={showNotifications}
+          onNotificationsToggle={setShowNotifications}
         />
+        <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
         <Cart onBackToShop={() => setCurrentPage('shop')} />
-        <footer className="bg-gray-900 text-white py-12 mt-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div>
-                <h3 className="text-xl font-bold mb-4">BuyNow</h3>
-                <p className="text-gray-400">Your one-stop shop for fashion and lifestyle.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4">Shop</h4>
-                <ul className="space-y-2 text-gray-400">
-                  <li>Men</li>
-                  <li>Women</li>
-                  <li>Kids</li>
-                  <li>Accessories</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4">Help</h4>
-                <ul className="space-y-2 text-gray-400">
-                  <li>Contact Us</li>
-                  <li>Shipping Info</li>
-                  <li>Returns</li>
-                  <li>FAQs</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-4">Follow Us</h4>
-                <ul className="space-y-2 text-gray-400">
-                  <li>Instagram</li>
-                  <li>Facebook</li>
-                  <li>Twitter</li>
-                </ul>
-              </div>
-            </div>
-            <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-              <p>&copy; 2024 BuyNow. All rights reserved.</p>
-            </div>
-          </div>
-        </footer>
+          <Footer />
       </>
     );
   }
@@ -162,7 +152,11 @@ function AppContent() {
         cartCount={cartCount}
         onSearchChange={setSearchQuery}
         onCartClick={() => setCurrentPage('cart')}
+        onProfileClick={() => setCurrentPage('profile')}
+        notificationsOpen={showNotifications}
+        onNotificationsToggle={setShowNotifications}
       />
+      <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
       <Hero />
       <Categories
         categories={categories}
@@ -188,46 +182,7 @@ function AppContent() {
 
         <ProductGrid products={filteredProducts} onAddToCart={handleAddToCart} />
       </div>
-
-      <footer className="bg-gray-900 text-white py-12 mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">BuyNow</h3>
-              <p className="text-gray-400">Your one-stop shop for fashion and lifestyle.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Shop</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a className="cursor-pointer hover:underline">Men</a></li>
-                <li><a className="cursor-pointer hover:underline">Women</a></li>
-                <li><a className="cursor-pointer hover:underline">Kids</a></li>
-                <li><a className="cursor-pointer hover:underline">Accessories</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Help</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a className="cursor-pointer hover:underline">Contact Us</a></li>
-                <li><a className="cursor-pointer hover:underline">Shipping Info</a></li>
-                <li><a className="cursor-pointer hover:underline">Returns</a></li>
-                <li><a className="cursor-pointer hover:underline">FAQs</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Follow Us</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a className="cursor-pointer hover:underline">Instagram</a></li>
-                <li><a className="cursor-pointer hover:underline">Facebook</a></li>
-                <li><a className="cursor-pointer hover:underline">Twitter</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 BuyNow. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+        <Footer />
     </div>
   );
 }
@@ -235,7 +190,11 @@ function AppContent() {
 function App() {
   return (
     <CartProvider>
-      <AppContent />
+      <ProfileProvider>
+        <NotificationProvider>
+          <AppContent />
+        </NotificationProvider>
+      </ProfileProvider>
     </CartProvider>
   );
 }

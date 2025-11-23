@@ -1,5 +1,6 @@
 import { ShoppingCart } from 'lucide-react';
 import { Product } from '../data/mockData';
+import { useNotifications } from '../context/NotificationContext';
 
 interface ProductCardProps {
   product: Product;
@@ -7,6 +8,17 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onAddToCart }: ProductCardProps) {
+  const { addNotification } = useNotifications();
+
+  const handleAddToCart = () => {
+    onAddToCart(product.id);
+    addNotification({
+      type: 'cart',
+      title: 'Item Added to Cart',
+      message: `${product.title} has been added to your cart`,
+      icon: 'shopping-cart'
+    });
+  };
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow group">
       <div className="relative aspect-square overflow-hidden bg-gray-100">
@@ -39,7 +51,7 @@ export default function ProductCard({ product, onAddToCart }: ProductCardProps) 
         </div>
 
         <button
-          onClick={() => onAddToCart(product.id)}
+          onClick={handleAddToCart}
           className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center space-x-2 font-medium"
         >
           <ShoppingCart className="h-4 w-4" />
