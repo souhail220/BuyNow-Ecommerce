@@ -1,33 +1,6 @@
-import { Tag, TrendingUp, Zap } from 'lucide-react';
+import {promotions} from "../data/mockData.ts";
 
 export default function Promotions() {
-  const promotions = [
-    {
-      id: 1,
-      icon: Tag,
-      title: 'New Arrivals',
-      description: 'Check out the latest fashion trends',
-      bgColor: 'bg-gradient-to-br from-purple-500 to-pink-500',
-      image: 'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      id: 2,
-      icon: Zap,
-      title: 'Flash Sale',
-      description: 'Up to 70% off - Limited time only',
-      bgColor: 'bg-gradient-to-br from-orange-500 to-red-500',
-      image: 'https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600'
-    },
-    {
-      id: 3,
-      icon: TrendingUp,
-      title: 'Trending Now',
-      description: "Shop what's hot this season",
-      bgColor: 'bg-gradient-to-br from-green-500 to-teal-500',
-      image: 'https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?auto=compress&cs=tinysrgb&w=600'
-    }
-  ];
-
   return (
     <div className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

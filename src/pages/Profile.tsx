@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Mail, Phone, MapPin } from 'lucide-react';
-import { useState } from 'react';
+import {ChangeEvent, useState} from 'react';
 import { useProfile } from '../context/ProfileContext';
 import { useNotifications } from '../context/NotificationContext';
 
@@ -13,7 +13,7 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -96,7 +96,7 @@ export default function Profile() {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
+                <label className="text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
                   <Mail className="h-4 w-4" />
                   <span>Email Address</span>
                 </label>
@@ -110,7 +110,7 @@ export default function Profile() {
               </div>
 
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
+                <label className="text-sm font-medium text-gray-700 mb-2 flex items-center space-x-2">
                   <Phone className="h-4 w-4" />
                   <span>Phone Number</span>
                 </label>

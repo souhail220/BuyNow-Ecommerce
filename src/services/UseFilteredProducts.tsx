@@ -1,8 +1,13 @@
 import { useMemo } from 'react';
 import {products} from "../data/mockData.ts";
-import {FilterState} from "../components/Filters.tsx";
+import {FilterState} from "../types/filterType.ts";
 
-const useFilteredProducts = (searchQuery: string, selectedCategory: string, filters: FilterState) => {
+const useFilteredProducts = (
+    searchQuery: string,
+    selectedCategory: string,
+    filters: FilterState
+) => {
+    
     const allSizes = useMemo(() => {
         const sizes = new Set<string>();
         products.forEach(p => p.sizes.forEach(s => sizes.add(s)));

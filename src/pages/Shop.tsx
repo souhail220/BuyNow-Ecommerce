@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import {useCart} from "../context/CartContext.tsx";
-import Filters, {FilterState} from "../components/Filters.tsx";
+import Filters from "../components/Filters.tsx";
 import {brands, categories, products} from "../data/mockData.ts";
 import Hero from "../components/Hero.tsx";
 import Categories from "../components/Categories.tsx";
 import Promotions from "../components/Promotions.tsx";
 import ProductGrid from "../components/ProductGrid.tsx";
 import useFilteredProducts from "../services/UseFilteredProducts.tsx";
+import {FilterState} from "../types/filterType.ts";
 
-const Shop = ({ searchQuery }: { searchQuery: string; onSearchChange: (query: string) => void }) => {
+interface ShopProps {
+    searchQuery: string;
+    onSearchChange: (query: string) => void;
+}
+const Shop = ({ searchQuery } : ShopProps) => {
     const { addToCart } = useCart();
     const [selectedCategory, setSelectedCategory] = useState('');
     const [filters, setFilters] = useState<FilterState>({

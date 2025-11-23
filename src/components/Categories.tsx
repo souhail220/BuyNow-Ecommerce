@@ -1,4 +1,4 @@
-import { Category } from '../data/mockData';
+import {Category} from "../types/product.ts";
 
 interface CategoriesProps {
   categories: Category[];

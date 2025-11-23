@@ -1,25 +1,12 @@
-export interface Product {
-  id: string;
-  title: string;
-  price: number;
-  category: string;
-  brand: string;
-  image: string;
-  sizes: string[];
-  colors: string[];
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  image: string;
-}
+import {Product} from "../types/product.ts";
+import {Category} from "../types/product.ts";
+import {Tag, TrendingUp, Zap} from "lucide-react";
 
 export const categories: Category[] = [
   {
     id: '1',
     name: 'Men',
-    image: 'https://images.pexels.com/photos/1972115/pexels-photo-1972115.jpeg?auto=compress&cs=tinysrgb&w=600'
+    image: 'https://images.pexels.com/photos/1656684/pexels-photo-1656684.jpeg?auto=compress&cs=tinysrgb&w=600'
   },
   {
     id: '2',
@@ -164,6 +151,33 @@ export const products: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: ['Black', 'Grey', 'Purple']
   }
+];
+
+export const promotions = [
+    {
+        id: 1,
+        icon: Tag,
+        title: 'New Arrivals',
+        description: 'Check out the latest fashion trends',
+        bgColor: 'bg-gradient-to-br from-purple-500 to-pink-500',
+        image: 'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        id: 2,
+        icon: Zap,
+        title: 'Flash Sale',
+        description: 'Up to 70% off - Limited time only',
+        bgColor: 'bg-gradient-to-br from-orange-500 to-red-500',
+        image: 'https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600'
+    },
+    {
+        id: 3,
+        icon: TrendingUp,
+        title: 'Trending Now',
+        description: "Shop what's hot this season",
+        bgColor: 'bg-gradient-to-br from-green-500 to-teal-500',
+        image: 'https://images.pexels.com/photos/1884584/pexels-photo-1884584.jpeg?auto=compress&cs=tinysrgb&w=600'
+    }
 ];
 
 export const brands = Array.from(new Set(products.map(p => p.brand))).sort();

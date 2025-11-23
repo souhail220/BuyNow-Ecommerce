@@ -1,6 +1,6 @@
 import { ShoppingCart } from 'lucide-react';
-import { Product } from '../data/mockData';
 import { useNotifications } from '../context/NotificationContext';
+import {Product} from "../types/product.ts";
 
 interface ProductCardProps {
   product: Product;

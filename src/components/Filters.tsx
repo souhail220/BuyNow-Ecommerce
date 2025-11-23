@@ -1,21 +1,6 @@
 import { ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
-
-export interface FilterState {
-  priceRange: [number, number];
-  brands: string[];
-  sizes: string[];
-  colors: string[];
-  sortBy: string;
-}
-
-interface FiltersProps {
-  filters: FilterState;
-  onFilterChange: (filters: FilterState) => void;
-  availableBrands: string[];
-  availableSizes: string[];
-  availableColors: string[];
-}
+import {FiltersProps, SortBy} from "../types/filterType.ts";
 
 export default function Filters({ filters, onFilterChange, availableBrands, availableSizes, availableColors }: FiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,7 +108,7 @@ export default function Filters({ filters, onFilterChange, availableBrands, avai
             )}
             <select
               value={filters.sortBy}
-              onChange={(e) => onFilterChange({ ...filters, sortBy: e.target.value })}
+              onChange={(e) => onFilterChange({ ...filters, sortBy: e.target.value as SortBy })}
               className="border border-gray-300 rounded-md px-3 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
               <option value="featured">Featured</option>

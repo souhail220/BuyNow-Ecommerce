@@ -1,5 +1,5 @@
-import { Product } from '../data/mockData';
 import ProductCard from './ProductCard';
+import {Product} from "../types/product.ts";
 
 interface ProductGridProps {
   products: Product[];
