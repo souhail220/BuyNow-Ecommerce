@@ -10,14 +10,21 @@ interface NavbarProps {
   onNotificationsToggle?: (open: boolean) => void;
 }
 
-export default function Navbar({ cartCount, onSearchChange, onCartClick, onProfileClick, notificationsOpen = false, onNotificationsToggle }: NavbarProps) {
+export default function Navbar({
+        cartCount,
+        onSearchChange,
+        onCartClick,
+        onProfileClick,
+        notificationsOpen = false,
+        onNotificationsToggle
+    }: NavbarProps) {
   const { unreadCount } = useNotifications();
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-gray-900">BuyNow</h1>
+            <a href="/"><h1 className="text-2xl font-bold text-gray-900">BuyNow</h1></a>
           </div>
 
           <div className="flex-1 max-w-2xl mx-8 hidden md:block">

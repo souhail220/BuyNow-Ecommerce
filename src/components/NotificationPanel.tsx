@@ -1,6 +1,7 @@
 import { X, Trash2, CheckCheck, Bell, AlertCircle, Gift, Zap, ShoppingCart, User } from 'lucide-react';
 import { useNotifications } from '../context/NotificationContext';
 import { Notification } from '../types/notifications';
+import * as React from "react";
 
 interface NotificationPanelProps {
   isOpen: boolean;

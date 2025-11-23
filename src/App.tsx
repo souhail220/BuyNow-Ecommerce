@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import Navbar from './shared/Navbar.tsx';
 import Hero from './components/Hero';
 import Categories from './components/Categories';
 import Filters, { FilterState } from './components/Filters';
@@ -12,10 +11,10 @@ import { CartProvider, useCart } from './context/CartContext';
 import { ProfileProvider } from './context/ProfileContext';
 import { NotificationProvider } from './context/NotificationContext';
 import { products, categories, brands } from './data/mockData';
-import {Footer} from "./shared/Footer.tsx";
+import {HomeLayout} from "./pages/HomeLayout.tsx";
 
 function AppContent() {
-  const { cartCount, addToCart } = useCart();
+  const { addToCart } = useCart();
   const [currentPage, setCurrentPage] = useState<'shop' | 'cart' | 'profile'>('shop');
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -113,76 +112,71 @@ function AppContent() {
   if (currentPage === 'profile') {
     return (
       <>
-        <Navbar
-          cartCount={cartCount}
-          onSearchChange={setSearchQuery}
-          onCartClick={() => setCurrentPage('cart')}
-          onProfileClick={() => setCurrentPage('profile')}
-          notificationsOpen={showNotifications}
-          onNotificationsToggle={setShowNotifications}
-        />
-        <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-        <Profile onBack={() => setCurrentPage('shop')} />
-        <Footer />
+          <HomeLayout
+              currentPage={'profile'}
+              setCurrentPage={setCurrentPage}
+              showNotifications={false}
+              setShowNotifications={setShowNotifications}
+              onSearchChange={setSearchQuery}
+          >
+              <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+              <Profile onBack={() => setCurrentPage('shop')} />
+          </HomeLayout>
       </>
     );
   }
 
   if (currentPage === 'cart') {
     return (
-      <>
-        <Navbar
-          cartCount={cartCount}
-          onSearchChange={setSearchQuery}
-          onCartClick={() => setCurrentPage('cart')}
-          onProfileClick={() => setCurrentPage('profile')}
-          notificationsOpen={showNotifications}
-          onNotificationsToggle={setShowNotifications}
-        />
-        <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-        <Cart onBackToShop={() => setCurrentPage('shop')} />
-          <Footer />
-      </>
+        <HomeLayout
+            currentPage={'cart'}
+            setCurrentPage={setCurrentPage}
+            showNotifications={false}
+            setShowNotifications={setShowNotifications}
+            onSearchChange={setSearchQuery}
+        >
+            <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+            <Cart onBackToShop={() => setCurrentPage('shop')} />
+        </HomeLayout>
     );
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar
-        cartCount={cartCount}
-        onSearchChange={setSearchQuery}
-        onCartClick={() => setCurrentPage('cart')}
-        onProfileClick={() => setCurrentPage('profile')}
-        notificationsOpen={showNotifications}
-        onNotificationsToggle={setShowNotifications}
-      />
-      <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
-      <Hero />
-      <Categories
-        categories={categories}
-        selectedCategory={selectedCategory}
-        onCategorySelect={handleCategorySelect}
-      />
-      <Promotions />
+        <HomeLayout
+            currentPage={'shop'}
+            setCurrentPage={setCurrentPage}
+            showNotifications={false}
+            setShowNotifications={setShowNotifications}
+            onSearchChange={setSearchQuery}
+        >
+            <NotificationPanel isOpen={showNotifications} onClose={() => setShowNotifications(false)} />
+            <Hero />
+            <Categories
+                categories={categories}
+                selectedCategory={selectedCategory}
+                onCategorySelect={handleCategorySelect}
+            />
+            <Promotions />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Filters
-          filters={filters}
-          onFilterChange={setFilters}
-          availableBrands={brands}
-          availableSizes={allSizes}
-          availableColors={allColors}
-        />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <Filters
+                    filters={filters}
+                    onFilterChange={setFilters}
+                    availableBrands={brands}
+                    availableSizes={allSizes}
+                    availableColors={allColors}
+                />
 
-        <div className="mb-4">
-          <p className="text-gray-600">
-            Showing <span className="font-semibold">{filteredProducts.length}</span> products
-          </p>
-        </div>
+                <div className="mb-4">
+                    <p className="text-gray-600">
+                        Showing <span className="font-semibold">{filteredProducts.length}</span> products
+                    </p>
+                </div>
 
-        <ProductGrid products={filteredProducts} onAddToCart={handleAddToCart} />
-      </div>
-        <Footer />
+                <ProductGrid products={filteredProducts} onAddToCart={handleAddToCart} />
+            </div>
+        </HomeLayout>
     </div>
   );
 }
