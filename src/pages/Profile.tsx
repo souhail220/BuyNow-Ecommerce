@@ -1,18 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Mail, Phone, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { useProfile } from '../context/ProfileContext';
 import { useNotifications } from '../context/NotificationContext';
 
-interface ProfileProps {
-  onBack: () => void;
-}
-
-export default function Profile({ onBack }: ProfileProps) {
+export default function Profile() {
   const { profile, updateProfile, isLoading } = useProfile();
   const { addNotification } = useNotifications();
   const [formData, setFormData] = useState(profile);
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,7 +45,7 @@ export default function Profile({ onBack }: ProfileProps) {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
-          onClick={onBack}
+          onClick={() => navigate('/')}
           className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-8"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -191,7 +190,7 @@ export default function Profile({ onBack }: ProfileProps) {
 
             <div className="flex justify-end space-x-4">
               <button
-                onClick={onBack}
+                onClick={() => navigate('/')}
                 className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition"
               >
                 Cancel

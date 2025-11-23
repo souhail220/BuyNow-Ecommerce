@@ -1,18 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import CartItemComponent from '../components/CartItem';
 
-interface CartProps {
-  onBackToShop: () => void;
-}
 
-export default function Cart({ onBackToShop }: CartProps) {
+export default function Cart() {
   const { items, updateQuantity, removeFromCart, clearCart, subtotal, tax, total } = useCart();
+  const navigate = useNavigate();
 
   const handleCheckout = () => {
     alert('Checkout functionality would be implemented here. Total: $' + total.toFixed(2));
     clearCart();
-    onBackToShop();
+    navigate('/')
   };
 
   if (items.length === 0) {
@@ -20,7 +19,7 @@ export default function Cart({ onBackToShop }: CartProps) {
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <button
-            onClick={onBackToShop}
+            onClick={() => navigate('/')}
             className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-8"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -32,7 +31,7 @@ export default function Cart({ onBackToShop }: CartProps) {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Your Cart is Empty</h2>
             <p className="text-gray-500 mb-8">Add some items to get started!</p>
             <button
-              onClick={onBackToShop}
+              onClick={() => navigate('/')}
               className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
             >
               Start Shopping
@@ -47,7 +46,7 @@ export default function Cart({ onBackToShop }: CartProps) {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
-          onClick={onBackToShop}
+          onClick={() => navigate('/')}
           className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 mb-8"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -100,7 +99,7 @@ export default function Cart({ onBackToShop }: CartProps) {
               </button>
 
               <button
-                onClick={onBackToShop}
+                onClick={() => navigate('/')}
                 className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
               >
                 Continue Shopping
