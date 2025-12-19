@@ -1,0 +1,86 @@
+services:
+  authentication-service:
+    image: ditoo2/buynow-authentication-service:0.0.1
+    container_name: UserAuthenticationService
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+
+  apigateway-service:
+    image: ditoo2/buynow-apigateway-service:0.0.1
+    container_name: APIGatewayService
+    ports:
+      - "80:80"
+    networks:
+      - backend-network
+
+  product-service:
+    image: ditoo2/buynow-product-service:0.0.1
+    container_name: ProductService
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/products
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    networks:
+      - backend-network
+
+  cart-service:
+    image: ditoo2/buynow-cart-service:0.0.1
+    container_name: CartService
+    ports:
+      - "8082:8082"
+    networks:
+      - backend-network
+
+  payment-service:
+    image: ditoo2/buynow-payment-service:0.0.1
+    container_name: PaymentService
+    ports:
+      - "8083:8083"
+    networks:
+      - backend-network
+
+  mongodb:
+    image: mongo:8.2.2
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb-data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --eval 'db.runCommand({ ping: 1 })'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-network
+
+  activemq:
+    image: apache/activemq-classic:6.1.6
+    container_name: activemq
+    ports:
+      - "61617:61616" # JMS OpenWire port
+      - "8162:8161"   # Web Console
+    environment:
+      - ACTIVEMQ_ADMIN_LOGIN=admin
+      - ACTIVEMQ_ADMIN_PASSWORD=admin
+    volumes:
+      - activemq-data:/opt/activemq/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8161" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
