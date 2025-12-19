@@ -12,6 +12,7 @@ The project follows a **microservices architecture** with a dedicated frontend l
 - API Gateway as the single entry point for backend services
 - Independent backend microservices communicating over `backend-network`
 - MongoDB for data persistence
+- Redis for caching frequently accessed product data
 - ActiveMQ for asynchronous messaging
 
 ## Frontend (React Application)
@@ -65,7 +66,18 @@ The project follows a **microservices architecture** with a dedicated frontend l
 - Docker Volume: `mongodb-data`
 - Health check included
 
-### 7. ActiveMQ
+### 7. Caching Layer (Redis)
+
+- Redis is used to cache:
+  - Product lists
+  - Product details by ID
+- Improves response time and reduces load on MongoDB
+- Primarily consumed by the **Product Service**
+- Typical use cases:
+  - Read-through cache
+  - Cache eviction on product updates
+
+### 8. ActiveMQ
 - Message broker for asynchronous communication
 - Ports:
   - 61617 → JMS OpenWire
