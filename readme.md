@@ -1,8 +1,9 @@
-# BuyNow Microservices Project
+# BuyNow Ecommerce Project
 
 ## Project Overview
-**BuyNow** is a microservices-based e-commerce platform built using Spring Boot, MongoDB, and ActiveMQ.  
+**BuyNow** is a microservices-based e-commerce platform built using Spring Boot,React, MongoDB, Redis, and ActiveMQ.  
 The system is designed to support modular development, scalability, and maintainability.
+
 
 ## Architecture
 
@@ -15,16 +16,40 @@ The project follows a **microservices architecture** with a dedicated frontend l
 - Redis for caching frequently accessed product data
 - ActiveMQ for asynchronous messaging
 
+
 ## Frontend (React Application)
 
-- Built with **React**
-- Communicates exclusively with the backend via the **API Gateway**
-- Responsible for:
-    - User authentication flows
-    - Product browsing
-    - Cart management
-    - Payment initiation
-- Decoupled from backend services to allow independent development and deployment
+The frontend is built with **React** and serves as the client-facing layer of the platform.  
+It communicates exclusively with the backend through the **API Gateway**, ensuring a clean separation of concerns and centralized API access.
+
+### Responsibilities
+
+- User authentication and session handling
+- Product browsing and search
+- Cart management
+- Payment initiation
+- UI rendering and user interaction
+
+### Frontend Best Practices
+
+#### Performance Optimization
+- Lazy-loading routes and heavy components to reduce initial load time
+- Memoization using `React.memo`, `useMemo`, and `useCallback` to avoid unnecessary re-renders
+- Efficient state updates by keeping state localized when possible
+- Avoiding excessive API calls through proper data fetching strategies
+
+#### View Optimization
+- Reusable and composable UI components
+- Clear separation between layout, view, and logic
+- Responsive design to support multiple screen sizes
+- Proper use of loading states, skeletons, and empty states for better UX
+
+#### Scalability
+- Feature-based folder structure to support growth
+- Components designed to be reusable across multiple views
+- Minimal coupling between UI components and business logic
+- Clear boundaries between presentation layer and data-fetching logic
+
 
 ## Backend Key Services
 
